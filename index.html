@@ -4,25 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convite</title>
+    <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="styles.css">
+
 </head>
+
 <body>
+
     <section>
         <header>você foi convidado</header>
-        <article>
-            Você foi convidado para uma competição de criação de homapages. <br> <br>
-    
-            Se decidir aceitar, você irá competir com outros participantes ao criar uma homepage e disputará o prêmio de <strong>R$50,00</strong>. <br><br>
 
-            Esta homepage terá de ter alguns elementos que serão requisitados posteriormente. <br> <br>
-    
-            Os sites serão avaliados e votados com base na beleza e na limpeza do código. 
-            O prêmio será dividido da seguinte forma: <strong>R$40,00</strong> para o site mais bonito e <strong>R$10,00</strong> para o código mais limpo. <br> <br>
-    
-            Mesmo que você não ganhe, esta será uma excelente oportunidade para aprender uma 
-            nova tecnologia e adicionar um projeto interessante ao seu currículo.
-        </article>
+        <div id="pages">
+            <article id="invite">
+                Você foi convidado para uma competição de criação de homepages. <br> <br>
+        
+                Se decidir aceitar, você irá competir com outros participantes ao criar uma homepage e disputará o prêmio de <strong>R$50,00</strong>. <br><br>
+
+                Esta homepage terá de ter alguns elementos que serão requisitados posteriormente. <br> <br>
+        
+                Os sites serão avaliados e votados com base na beleza e na limpeza do código. 
+                O prêmio será dividido da seguinte forma: <strong>R$40,00</strong> para o site mais bonito e <strong>R$10,00</strong> para o código mais limpo. <br> <br>
+        
+                Mesmo que você não ganhe, esta será uma excelente oportunidade para aprender uma 
+                nova tecnologia e adicionar um projeto interessante ao seu currículo.
+            </article>
+
+            <article id="rules">
+                A homepage deverá conter: <br><br>
+                <ul>
+                    <li>Um relógio funcional como item de foco (principal) da página.</li> <br>
+                    <li>Links para pelo menos três páginas (Ex.: Youtube, Discord, GitHub)</li> <br>
+                    <li>Poderá ser usado imagens, sons ou compontents de terceiros desde que com originalide </li> <br>
+                    <li>Poderá ser usado qualquer tecnologia (NextJS, HTML + CSS, ...)</li> <br>
+                </ul>
+            </article>
+
+            <article id="datas">
+                A página deverá ser feita e entregue em uma semana. <br> <br>
+                O período da competição irá de ../../.... a ../../.... <br> <br>
+
+                A parte gráfica será avaliado junto de Arthur (Tuis) e código por Arthur (yut). <br> <br>
+                
+                Os participantes estão convidados a treinar e aprender novas tecnologias até a data de início, 
+                lembrando que qualquer homepage inscrita na competição deverá ser feita dentro da data estipulada. <br> <br>
+                
+                Boas preparações!
+            </article>
+        </div>
+
+        <img id="swpleft" src="swipe-left.svg" alt="swipe-left">
+
         <a href="https://chat.whatsapp.com/EZ07hEfq61uBJjrYYJH6ph" target="_blank">Aceitar convite</a>
+
+        <button id="rightarrow">
+            <img src="./right-arrow-svgrepo-com.svg" alt=">">
+        </button>
     </section>
+    <!-- <aside>
+        <button href="">Regras</button>
+    </aside> -->
+
+    <script>
+        let touchstartX = 0;
+        let touchendX = 0;
+        var currentIndex = 0;
+    
+        function setupPaging(parentId) {
+            var parent = document.getElementById(parentId);
+            var children = parent.children;
+    
+            // Initially hide all children except the first one
+            for (var i = 0; i < children.length; i++) {
+                if (i === 0) {
+                    children[i].style.opacity = "1";
+                    children[i].style.animation = "fadeUp 1s forwards";
+                } else {
+                    children[i].style.opacity = "0";
+                    children[i].style.animation = "none";
+                }
+            }
+    
+            // Add click event listener to the right arrow
+            document.getElementById("rightarrow").addEventListener("click", function() {
+                // Hide current child
+                children[currentIndex].style.animation = "swipeRightOut 1s forwards";
+    
+                // Show next child
+                currentIndex = (currentIndex + 1) % children.length;
+                children[currentIndex].style.animation = "swipeRightIn 1s forwards";
+            });
+        }
+    
+        function checkDirection() {
+            if (touchendX < touchstartX) {
+                // Hide current child
+                var parent = document.getElementById("pages");
+                var children = parent.children;
+                children[currentIndex].style.animation = "swipeRightOut 1s forwards";
+    
+                // Show next child
+                currentIndex = (currentIndex + 1) % children.length;
+                children[currentIndex].style.animation = "swipeRightIn 1s forwards";
+            }
+        }
+    
+        document.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+    
+        document.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            checkDirection();
+        });
+    
+        // Call the function with the id of the parent element
+        setupPaging("pages");
+    </script>
+    
 </body>
 </html>
